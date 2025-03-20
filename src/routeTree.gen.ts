@@ -8,18 +8,58 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
+import { Route as appAuthenticatedImport } from './routes/(app)/_authenticated'
+import { Route as appAuthenticatedCollectionsIndexImport } from './routes/(app)/_authenticated/collections/index'
+import { Route as appAuthenticatedCollectionsCollectionIdIndexImport } from './routes/(app)/_authenticated/collections/$collectionId/index'
+
+// Create Virtual Routes
+
+const appImport = createFileRoute('/(app)')()
 
 // Create/Update Routes
+
+const appRoute = appImport.update({
+  id: '/(app)',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const appAuthenticatedRoute = appAuthenticatedImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => appRoute,
+} as any)
+
+const appAuthenticatedCollectionsIndexRoute =
+  appAuthenticatedCollectionsIndexImport.update({
+    id: '/collections/',
+    path: '/collections/',
+    getParentRoute: () => appAuthenticatedRoute,
+  } as any)
+
+const appAuthenticatedCollectionsCollectionIdIndexRoute =
+  appAuthenticatedCollectionsCollectionIdIndexImport.update({
+    id: '/collections/$collectionId/',
+    path: '/collections/$collectionId/',
+    getParentRoute: () => appAuthenticatedRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -32,39 +72,120 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/(app)': {
+      id: '/(app)'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof appImport
+      parentRoute: typeof rootRoute
+    }
+    '/(app)/_authenticated': {
+      id: '/(app)/_authenticated'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof appAuthenticatedImport
+      parentRoute: typeof appRoute
+    }
+    '/(app)/_authenticated/collections/': {
+      id: '/(app)/_authenticated/collections/'
+      path: '/collections'
+      fullPath: '/collections'
+      preLoaderRoute: typeof appAuthenticatedCollectionsIndexImport
+      parentRoute: typeof appAuthenticatedImport
+    }
+    '/(app)/_authenticated/collections/$collectionId/': {
+      id: '/(app)/_authenticated/collections/$collectionId/'
+      path: '/collections/$collectionId'
+      fullPath: '/collections/$collectionId'
+      preLoaderRoute: typeof appAuthenticatedCollectionsCollectionIdIndexImport
+      parentRoute: typeof appAuthenticatedImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface appAuthenticatedRouteChildren {
+  appAuthenticatedCollectionsIndexRoute: typeof appAuthenticatedCollectionsIndexRoute
+  appAuthenticatedCollectionsCollectionIdIndexRoute: typeof appAuthenticatedCollectionsCollectionIdIndexRoute
+}
+
+const appAuthenticatedRouteChildren: appAuthenticatedRouteChildren = {
+  appAuthenticatedCollectionsIndexRoute: appAuthenticatedCollectionsIndexRoute,
+  appAuthenticatedCollectionsCollectionIdIndexRoute:
+    appAuthenticatedCollectionsCollectionIdIndexRoute,
+}
+
+const appAuthenticatedRouteWithChildren =
+  appAuthenticatedRoute._addFileChildren(appAuthenticatedRouteChildren)
+
+interface appRouteChildren {
+  appAuthenticatedRoute: typeof appAuthenticatedRouteWithChildren
+}
+
+const appRouteChildren: appRouteChildren = {
+  appAuthenticatedRoute: appAuthenticatedRouteWithChildren,
+}
+
+const appRouteWithChildren = appRoute._addFileChildren(appRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof appAuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/collections': typeof appAuthenticatedCollectionsIndexRoute
+  '/collections/$collectionId': typeof appAuthenticatedCollectionsCollectionIdIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof appAuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/collections': typeof appAuthenticatedCollectionsIndexRoute
+  '/collections/$collectionId': typeof appAuthenticatedCollectionsCollectionIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/(app)': typeof appRouteWithChildren
+  '/(app)/_authenticated': typeof appAuthenticatedRouteWithChildren
+  '/(app)/_authenticated/collections/': typeof appAuthenticatedCollectionsIndexRoute
+  '/(app)/_authenticated/collections/$collectionId/': typeof appAuthenticatedCollectionsCollectionIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/login' | '/collections' | '/collections/$collectionId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/login' | '/collections' | '/collections/$collectionId'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/(app)'
+    | '/(app)/_authenticated'
+    | '/(app)/_authenticated/collections/'
+    | '/(app)/_authenticated/collections/$collectionId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  appRoute: typeof appRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
+  appRoute: appRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +198,38 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/login",
+        "/(app)"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/login": {
+      "filePath": "login.tsx"
+    },
+    "/(app)": {
+      "filePath": "(app)",
+      "children": [
+        "/(app)/_authenticated"
+      ]
+    },
+    "/(app)/_authenticated": {
+      "filePath": "(app)/_authenticated.tsx",
+      "parent": "/(app)",
+      "children": [
+        "/(app)/_authenticated/collections/",
+        "/(app)/_authenticated/collections/$collectionId/"
+      ]
+    },
+    "/(app)/_authenticated/collections/": {
+      "filePath": "(app)/_authenticated/collections/index.tsx",
+      "parent": "/(app)/_authenticated"
+    },
+    "/(app)/_authenticated/collections/$collectionId/": {
+      "filePath": "(app)/_authenticated/collections/$collectionId/index.tsx",
+      "parent": "/(app)/_authenticated"
     }
   }
 }
