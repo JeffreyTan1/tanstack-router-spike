@@ -1,5 +1,5 @@
 import {  useSuspenseQuery } from "@tanstack/react-query";
-import { userQueryOptions } from "../../../api/user.queryOptions";
+import { userQueryOptions } from "../../../api/queryOptions";
 
 export function Navbar() {
     const { data: user } = useSuspenseQuery(userQueryOptions)
