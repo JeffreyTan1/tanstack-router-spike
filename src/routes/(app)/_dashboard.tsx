@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { userQueryOptions } from "../../api/user.queryOptions";
+import { userQueryOptions } from "../../api/queryOptions";
 import { Navbar } from "./-components/Navbar";
 
 export const Route = createFileRoute("/(app)/_dashboard")({
