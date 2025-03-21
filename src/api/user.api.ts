@@ -16,10 +16,7 @@ const login = async () => {
 	return DUMMY_JWT_TOKEN;
 };
 
-const getUser = async (jwtToken: string) => {
-	if (jwtToken !== DUMMY_JWT_TOKEN) {
-		throw new Error("Invalid JWT token");
-	}
+const getUser = async () => {
 	return DUMMY_USER;
 };
 

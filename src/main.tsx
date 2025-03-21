@@ -9,12 +9,16 @@ import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { useAuth } from "./auth.tsx";
 import { AuthProvider } from "./auth.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 // Create a new router instance
 const router = createRouter({
 	routeTree,
 	context: {
 		auth: undefined!,
+		queryClient,
 	},
 	defaultPreload: "intent",
 	scrollRestoration: true,
@@ -31,7 +35,11 @@ declare module "@tanstack/react-router" {
 
 function InnerApp() {
 	const auth = useAuth();
-	return <RouterProvider router={router} context={{ auth }} />;
+	return (
+		<QueryClientProvider client={queryClient}>
+			<RouterProvider router={router} context={{ auth }} />
+		</QueryClientProvider>
+	);
 }
 
 function App() {

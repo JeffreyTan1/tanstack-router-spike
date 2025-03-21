@@ -52,10 +52,7 @@ const initializeCollections = () => {
 	);
 };
 
-const getCollections = async (jwtToken: string) => {
-	if (jwtToken !== DUMMY_JWT_TOKEN) {
-		throw new Error("Invalid JWT token");
-	}
+const getCollections = async () => {
 	if (!localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY)) {
 		initializeCollections();
 	}
@@ -64,21 +61,18 @@ const getCollections = async (jwtToken: string) => {
 	);
 };
 
-const getCollection = async (jwtToken: string, collectionId: string) => {
-	if (jwtToken !== DUMMY_JWT_TOKEN) {
-		throw new Error("Invalid JWT token");
-	}
+const getCollection = async (collectionId: string) => {
 	return JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
 	).find((collection: Collection) => collection.id === collectionId);
 };
 
-interface UpdateImage {
+export interface UpdateImage {
 	imageId: string;
 	delete: boolean;
 }
 
-interface BatchUpdateCollectionRequest {
+export interface BatchUpdateCollectionRequest {
 	collectionId: string;
 	imageUpdates: UpdateImage[];
 }
