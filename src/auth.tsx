@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { userApi } from "./api/user.api";
 
 export interface AuthContext {
@@ -10,18 +16,34 @@ export interface AuthContext {
 
 const AuthContext = createContext<AuthContext | null>(null);
 
+const LOCAL_STORAGE_KEY = "jwtToken";
+
+function storeJwtToken(jwtToken: string | null) {
+	localStorage.setItem(LOCAL_STORAGE_KEY, jwtToken || "");
+}
+
+function getJwtToken() {
+	return localStorage.getItem(LOCAL_STORAGE_KEY);
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-	const [jwtToken, setJwtToken] = useState<string | null>(null);
+	const [jwtToken, setJwtToken] = useState<string | null>(getJwtToken());
 
 	const isAuthenticated = !!jwtToken;
 
 	const logout = useCallback(async () => {
 		setJwtToken(null);
+		storeJwtToken(null);
 	}, []);
 
 	const login = useCallback(async () => {
 		setJwtToken(await userApi.login());
+		storeJwtToken(jwtToken);
 	}, []);
+
+	useEffect(() => {
+		storeJwtToken(jwtToken);
+	}, [jwtToken]);
 
 	return (
 		<AuthContext.Provider value={{ isAuthenticated, jwtToken, login, logout }}>
