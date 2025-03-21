@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { collectionQueryOptions } from "../../../../../api/queryOptions";
+import { collectionQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute(
