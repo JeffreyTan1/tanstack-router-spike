@@ -1,11 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
-  '/(app)/_authenticated/collections/$collectionId/',
+	"/(app)/_authenticated/collections/$collectionId/",
 )({
-  component: RouteComponent,
-})
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/_authenticated/collections/$collectionId/"!</div>
+	return <div>Hello "/_authenticated/collections/$collectionId/"!</div>;
 }
