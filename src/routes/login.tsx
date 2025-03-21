@@ -7,7 +7,7 @@ export const Route = createFileRoute("/login")({
 		redirect: z.string().optional().catch(""),
 	}),
 	beforeLoad: async ({ context, search }) => {
-		if (context.auth?.isAuthenticated) {
+		if (context.auth.isAuthenticated) {
 			throw redirect({ to: search.redirect || "/collections" });
 		}
 	},
