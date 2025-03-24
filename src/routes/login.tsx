@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 import { useAuth } from "@/auth";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/login")({
 	validateSearch: z.object({
@@ -23,7 +24,7 @@ function RouteComponent() {
 	};
 	return (
 		<div>
-			<button onClick={handleLogin}>Login</button>
+			<Button onClick={handleLogin}>Login</Button>
 		</div>
 	);
 }

@@ -16,7 +16,13 @@ export const Route = createFileRoute("/(app)/_dashboard")({
 	loader: async ({ context }) => {
 		return context.queryClient.ensureQueryData(userQueryOptions)
 	},
+	pendingComponent: () => {
+		return <div>Loading...</div>;
+	},
 	component: LayoutComponent,
+	errorComponent: () => {
+		return <div>Error</div>;
+	},
 });
 
 function LayoutComponent() {
