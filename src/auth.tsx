@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const logout = useCallback(async () => {
 		setJwtToken(null);
 		storeJwtToken(null);
-		window.location.reload();
+		window.location.href = "/";
 	}, []);
 
 	const login = useCallback(async () => {
