@@ -1,4 +1,4 @@
-import { DUMMY_JWT_TOKEN } from "./user.api";
+import { FAKE_API_DELAY } from "./constants";
 
 export interface Collection {
 	id: string;
@@ -53,6 +53,8 @@ const initializeCollections = () => {
 };
 
 const getCollections = async () => {
+	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
+
 	if (!localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY)) {
 		initializeCollections();
 	}
@@ -62,6 +64,8 @@ const getCollections = async () => {
 };
 
 const getCollection = async (collectionId: string) => {
+	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
+
 	return JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
 	).find(
@@ -75,23 +79,20 @@ export interface UpdateImage {
 }
 
 export interface BatchUpdateCollectionRequest {
-	collectionId: string;
 	imageUpdates: UpdateImage[];
 }
 
 const updateCollection = async (
-	jwtToken: string,
+	collectionId: string,
 	batchUpdateCollection: BatchUpdateCollectionRequest,
 ) => {
-	if (jwtToken !== DUMMY_JWT_TOKEN) {
-		throw new Error("Invalid JWT token");
-	}
+	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
+
 	const collections = JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
 	);
 	const collection = collections.find(
-		(collection: Collection) =>
-			collection.id === batchUpdateCollection.collectionId,
+		(collection: Collection) => collection.id === collectionId,
 	);
 	if (!collection) {
 		throw new Error("Collection not found");

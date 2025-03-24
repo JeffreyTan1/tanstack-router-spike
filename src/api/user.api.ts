@@ -1,3 +1,5 @@
+import { FAKE_API_DELAY } from "./constants";
+
 export interface User {
 	id: string;
 	email: string;
@@ -13,10 +15,12 @@ const DUMMY_USER: User = {
 };
 
 const login = async () => {
+	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
 	return DUMMY_JWT_TOKEN;
 };
 
 const getUser = async () => {
+	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
 	return DUMMY_USER;
 };
 

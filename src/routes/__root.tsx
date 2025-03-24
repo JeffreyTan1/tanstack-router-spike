@@ -9,10 +9,12 @@ interface RootContext {
 }
 
 export const Route = createRootRouteWithContext<RootContext>()({
-	component: () => (
-		<>
-			<Outlet />
-			<TanStackRouterDevtools />
-		</>
-	),
+	component: () => {
+		return (
+			<>
+				<Outlet />
+				<TanStackRouterDevtools />
+			</>
+		);
+	},
 });

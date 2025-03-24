@@ -14,6 +14,7 @@ export function Navbar() {
 				<h1>
 					Welcome <b>{user.name}</b>
 				</h1>
+
 				<Button
 					variant="outline"
 					onClick={() => {
