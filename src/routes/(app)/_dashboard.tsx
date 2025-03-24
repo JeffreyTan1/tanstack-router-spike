@@ -14,7 +14,7 @@ export const Route = createFileRoute("/(app)/_dashboard")({
 		}
 	},
 	loader: async ({ context }) => {
-		return context.queryClient.ensureQueryData(userQueryOptions)
+		return context.queryClient.ensureQueryData(userQueryOptions);
 	},
 	pendingComponent: () => {
 		return <div>Loading...</div>;
@@ -29,6 +29,7 @@ function LayoutComponent() {
 	return (
 		<div className="mx-auto max-w-7xl py-4 px-2">
 			<Navbar />
+			<div className="p-4" />
 			<Outlet />
 		</div>
 	);

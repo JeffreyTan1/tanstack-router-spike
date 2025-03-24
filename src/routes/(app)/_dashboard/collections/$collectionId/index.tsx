@@ -5,15 +5,27 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 export const Route = createFileRoute(
 	"/(app)/_dashboard/collections/$collectionId/",
 )({
-	loader: async ({context, params}) => {
-		return context.queryClient.ensureQueryData(collectionQueryOptions(params.collectionId))
+	loader: async ({ context, params }) => {
+		return context.queryClient.ensureQueryData(
+			collectionQueryOptions(params.collectionId),
+		);
 	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { collectionId } = Route.useParams()
-	const { data: collection } = useSuspenseQuery(collectionQueryOptions(collectionId))
+	const { collectionId } = Route.useParams();
+	const { data: collection } = useSuspenseQuery(
+		collectionQueryOptions(collectionId),
+	);
 
-	return <div>{JSON.stringify(collection)}</div>;
+	return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+		{
+			collection.images.map((image) => (
+				<div key={image.id}>
+					<img src={image.url} alt={image.fileName} />
+				</div>
+			))
+		}
+	</div>;
 }

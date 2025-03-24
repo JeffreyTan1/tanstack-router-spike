@@ -18,17 +18,17 @@ const DUMMY_IMAGES: Image[] = [
 	{
 		id: "1",
 		fileName: "Image 1",
-		url: "https://via.placeholder.com/150",
+		url: "https://picsum.photos/200/300",
 	},
 	{
 		id: "2",
 		fileName: "Image 2",
-		url: "https://via.placeholder.com/150",
+		url: "https://picsum.photos/200/300",
 	},
 	{
 		id: "3",
 		fileName: "Image 3",
-		url: "https://via.placeholder.com/150",
+		url: "https://picsum.photos/200/300",
 	},
 ];
 
@@ -58,13 +58,15 @@ const getCollections = async () => {
 	}
 	return JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
-	);
+	) as Collection[];
 };
 
 const getCollection = async (collectionId: string) => {
 	return JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
-	).find((collection: Collection) => collection.id === collectionId);
+	).find(
+		(collection: Collection) => collection.id === collectionId,
+	) as Collection;
 };
 
 export interface UpdateImage {

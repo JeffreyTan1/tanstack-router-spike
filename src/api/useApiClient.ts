@@ -6,8 +6,7 @@
 
 // export function useApiClient() {
 //     const { jwtToken } = useAuth()
-    
-   
+
 // let accessToken: string | undefined = undefined;
 
 // const authMiddleware: Middleware = {
@@ -34,6 +33,5 @@
 // client.use(authMiddleware);
 
 // return client;
-
 
 // }

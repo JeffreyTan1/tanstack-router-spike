@@ -23,7 +23,8 @@ function RouteComponent() {
 		window.location.reload();
 	};
 	return (
-		<div>
+		<div className="flex flex-col justify-center items-center h-screen gap-4">
+			<p>This will log you in as Test User</p>
 			<Button onClick={handleLogin}>Login</Button>
 		</div>
 	);
