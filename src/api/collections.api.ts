@@ -18,17 +18,17 @@ const DUMMY_IMAGES: Image[] = [
 	{
 		id: "1",
 		fileName: "Image 1",
-		url: "https://picsum.photos/200/300",
+		url: "https://picsum.photos/300/200",
 	},
 	{
 		id: "2",
 		fileName: "Image 2",
-		url: "https://picsum.photos/200/300",
+		url: "https://picsum.photos/300/200",
 	},
 	{
 		id: "3",
 		fileName: "Image 3",
-		url: "https://picsum.photos/200/300",
+		url: "https://picsum.photos/300/200",
 	},
 ];
 

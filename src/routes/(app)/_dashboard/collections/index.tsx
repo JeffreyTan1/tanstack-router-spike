@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { collectionsQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Grid } from "@/components/common/grid";
 import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/(app)/_dashboard/collections/")({
 function RouteComponent() {
 	const { data: collections } = useSuspenseQuery(collectionsQueryOptions);
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+		<Grid>
 			{collections.map((collection) => (
 				<Card key={collection.id}>
 					<CardHeader>
@@ -35,6 +36,6 @@ function RouteComponent() {
 					</CardContent>
 				</Card>
 			))}
-		</div>
+		</Grid>
 	);
 }

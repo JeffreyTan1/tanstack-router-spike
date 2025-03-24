@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { collectionQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Grid } from "@/components/common/grid";
 
 export const Route = createFileRoute(
 	"/(app)/_dashboard/collections/$collectionId/",
@@ -19,13 +20,16 @@ function RouteComponent() {
 		collectionQueryOptions(collectionId),
 	);
 
-	return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-		{
-			collection.images.map((image) => (
-				<div key={image.id}>
-					<img src={image.url} alt={image.fileName} />
+	return (
+		<Grid>
+			{collection.images.map((image) => (
+				<div
+					key={image.id}
+					className="h-64 border-4 rounded-lg overflow-hidden"
+				>
+					<img src={image.url} alt={image.fileName} className="w-full h-full" />
 				</div>
-			))
-		}
-	</div>;
+			))}
+		</Grid>
+	);
 }

@@ -11,7 +11,14 @@ import { useAuth } from "./auth.tsx";
 import { AuthProvider } from "./auth.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	// defaultOptions: {
+	// 	queries: {
+	// 		gcTime: 0,
+	// 		staleTime: 0,
+	// 	},
+	// },
+});
 
 // Create a new router instance
 const router = createRouter({

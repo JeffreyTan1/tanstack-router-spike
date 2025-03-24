@@ -7,15 +7,13 @@ export const Route = createFileRoute("/")({
 function App() {
 	return (
 		<div className="flex flex-col justify-center items-center h-screen gap-4">
-			<p>
-				This is the landing page of the app. This app is all about collections
-				of images.
-			</p>
+			<p>This is the landing page of the app.</p>
+			<p>This app is all about collections of images.</p>
 			<Link
 				to="/collections"
 				className={buttonVariants({ variant: "default" })}
 			>
-				Collections
+				Get Started with Collections
 			</Link>
 		</div>
 	);
