@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { userQueryOptions } from "@/api/queryOptions";
-import { Navbar } from "./_authed/-components/navbar";
+import { Navbar } from "./_authed/-components/Navbar";
 
 export const Route = createFileRoute("/_authed")({
 	beforeLoad: async ({ context, location }) => {
