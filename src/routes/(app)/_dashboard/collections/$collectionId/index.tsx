@@ -1,9 +1,16 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+	createFileRoute,
+	Link,
+} from "@tanstack/react-router";
 import { collectionQueryOptions } from "@/api/queryOptions";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { Grid } from "@/components/common/grid";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SelectableImage } from "./-components/selectableImage";
+import { useCollectionStore } from "./-stores/collection.store";
+import { collectionsApi } from "@/api/collections.api";
+import { queryClient } from "@/queryClient";
 
 export const Route = createFileRoute(
 	"/(app)/_dashboard/collections/$collectionId/",
@@ -18,9 +25,26 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
 	const { collectionId } = Route.useParams();
+
 	const { data: collection } = useSuspenseQuery(
 		collectionQueryOptions(collectionId),
 	);
+	const { selectedImageIds, selectImage, unselectImage, clearSelection } =
+		useCollectionStore();
+	const deleteMutation = useMutation({
+		mutationFn: () => {
+			return collectionsApi.updateCollection(collectionId, {
+				imageUpdates: selectedImageIds.map((imageId) => ({
+					imageId,
+					delete: true,
+				})),
+			});
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries();
+			clearSelection();
+		},
+	});
 
 	return (
 		<>
@@ -37,18 +61,38 @@ function RouteComponent() {
 
 			<Grid>
 				{collection.images.map((image) => (
-					<div
+					<SelectableImage
 						key={image.id}
-						className="h-64 border rounded-md overflow-hidden"
-					>
-						<img
-							src={image.url}
-							alt={image.fileName}
-							className="w-full h-full"
-						/>
-					</div>
+						image={image}
+						selected={selectedImageIds.includes(image.id)}
+						onSelect={() => {
+							if (selectedImageIds.includes(image.id)) {
+								unselectImage(image.id);
+							} else {
+								selectImage(image.id);
+							}
+						}}
+					/>
 				))}
 			</Grid>
+			{selectedImageIds.length > 0 && (
+				<div className="fixed bottom-4 right-4">
+					<div className="flex gap-2">
+						<Button
+							onClick={() => {
+								confirm("Are you sure you want to delete these images?") && deleteMutation.mutate();
+							}}
+							disabled={deleteMutation.isPending}
+							variant={"destructive"}
+						>
+							{deleteMutation.isPending ? "Deleting..." : "Delete"}
+						</Button>
+						<Button variant={"outline"} onClick={clearSelection}>
+							Cancel
+						</Button>
+					</div>
+				</div>
+			)}
 		</>
 	);
 }
