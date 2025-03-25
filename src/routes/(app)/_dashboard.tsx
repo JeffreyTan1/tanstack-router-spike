@@ -23,7 +23,7 @@ function LayoutComponent() {
 	return (
 		<div className="mx-auto max-w-7xl py-4 px-2">
 			<Navbar />
-			<div className="p-4" />
+			<div className="p-2.5" />
 			<Outlet />
 		</div>
 	);

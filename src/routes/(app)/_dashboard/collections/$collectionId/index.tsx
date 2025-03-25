@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { collectionQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Grid } from "@/components/common/grid";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute(
@@ -11,13 +11,6 @@ export const Route = createFileRoute(
 	loader: async ({ context, params }) => {
 		return context.queryClient.ensureQueryData(
 			collectionQueryOptions(params.collectionId),
-		);
-	},
-	pendingComponent: () => {
-		return (
-			<div className="flex justify-center items-center h-full">
-				<Loader2 className="size-4 animate-spin" />
-			</div>
 		);
 	},
 	component: RouteComponent,
