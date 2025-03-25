@@ -11,6 +11,9 @@ import { useAuth } from "./auth.tsx";
 import { AuthProvider } from "./auth.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { ErrorMessage } from "./components/common/errorMessage";
+import { Loader } from "./components/common/loader";
+
 const queryClient = new QueryClient();
 
 // Create a new router instance
@@ -24,6 +27,12 @@ const router = createRouter({
 	scrollRestoration: true,
 	defaultStructuralSharing: true,
 	defaultPreloadStaleTime: 0,
+	defaultErrorComponent: (errorComponentProps) => {
+		return <ErrorMessage errorComponentProps={errorComponentProps} />;
+	},
+	defaultPendingComponent: () => {
+		return <Loader />;
+	},
 });
 
 // Register the router instance for type safety

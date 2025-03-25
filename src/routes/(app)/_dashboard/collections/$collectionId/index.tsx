@@ -4,7 +4,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Grid } from "@/components/common/grid";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ErrorMessage } from "@/components/common/errorMessage";
 
 export const Route = createFileRoute(
 	"/(app)/_dashboard/collections/$collectionId/",
@@ -20,9 +19,6 @@ export const Route = createFileRoute(
 				<Loader2 className="size-4 animate-spin" />
 			</div>
 		);
-	},
-	errorComponent: (errorComponentProps) => {
-		return <ErrorMessage errorComponentProps={errorComponentProps} />;
 	},
 	component: RouteComponent,
 });
