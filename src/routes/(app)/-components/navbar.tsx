@@ -3,6 +3,7 @@ import { userQueryOptions } from "@/api/queryOptions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/auth";
+import { LogOutIcon } from "lucide-react";
 
 export function Navbar() {
 	const { data: user } = useSuspenseQuery(userQueryOptions);
@@ -21,7 +22,7 @@ export function Navbar() {
 						logout();
 					}}
 				>
-					Logout
+					<LogOutIcon />
 				</Button>
 			</div>
 		</Card>
