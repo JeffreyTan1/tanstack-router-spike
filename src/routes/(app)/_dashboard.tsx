@@ -1,8 +1,4 @@
-import {
-	createFileRoute,
-	Outlet,
-	redirect,
-} from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { userQueryOptions } from "@/api/queryOptions";
 import { Navbar } from "./-components/navbar";
 

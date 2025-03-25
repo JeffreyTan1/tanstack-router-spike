@@ -1,39 +1,15 @@
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-
-// Import the generated route tree
-import { routeTree } from "./routeTree.gen";
-
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
-import { useAuth } from "./auth.tsx";
-import { AuthProvider } from "./auth.tsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useAuth } from "./contexts/auth.tsx";
+import { AuthProvider } from "./contexts/auth.tsx";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./queryClient.tsx";
+import { createRouter } from "./createRouter.tsx";
 
-import { ErrorMessage } from "./components/common/errorMessage";
-import { Loader } from "./components/common/loader";
-
-const queryClient = new QueryClient();
-
-// Create a new router instance
-const router = createRouter({
-	routeTree,
-	context: {
-		auth: undefined!,
-		queryClient,
-	},
-	defaultPreload: "intent",
-	scrollRestoration: true,
-	defaultStructuralSharing: true,
-	defaultPreloadStaleTime: 0,
-	defaultErrorComponent: (errorComponentProps) => {
-		return <ErrorMessage errorComponentProps={errorComponentProps} />;
-	},
-	defaultPendingComponent: () => {
-		return <Loader />;
-	},
-});
+const router = createRouter(queryClient);
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {

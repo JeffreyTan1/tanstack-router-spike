@@ -1,1 +1,1 @@
-export const FAKE_API_DELAY = 1000;
+export const FAKE_API_DELAY = 4000;

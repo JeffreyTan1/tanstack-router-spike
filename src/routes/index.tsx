@@ -10,13 +10,8 @@ function App() {
 			<p>This is the landing page of the app.</p>
 			<p>This app is all about collections of images.</p>
 			<Button asChild>
-				<Link
-					to="/collections"
-				>
-					Get Started with Collections
-				</Link>
+				<Link to="/collections">Get Started with Collections</Link>
 			</Button>
-			
 		</div>
 	);
 }

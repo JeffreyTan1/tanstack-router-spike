@@ -32,8 +32,10 @@ function RouteComponent() {
 	return (
 		<>
 			<div>
-				<Button variant={'ghost'} asChild>
-					<Link to="/collections"><ArrowLeft /> Back</Link>
+				<Button variant={"ghost"} asChild>
+					<Link to="/collections">
+						<ArrowLeft /> Back
+					</Link>
 				</Button>
 				<h1 className="text-2xl font-bold">{collection.name}</h1>
 			</div>

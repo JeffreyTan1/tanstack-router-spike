@@ -5,7 +5,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { userApi } from "./api/user.api";
+import { userApi } from "../api/user.api";
 
 export interface AuthContext {
 	isAuthenticated: boolean;
