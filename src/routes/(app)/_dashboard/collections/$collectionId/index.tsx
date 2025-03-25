@@ -4,6 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Grid } from "@/components/common/grid";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ErrorMessage } from "@/components/common/errorMessage";
 
 export const Route = createFileRoute(
 	"/(app)/_dashboard/collections/$collectionId/",
@@ -20,8 +21,8 @@ export const Route = createFileRoute(
 			</div>
 		);
 	},
-	errorComponent: () => {
-		return <div>Error</div>;
+	errorComponent: (errorComponentProps) => {
+		return <ErrorMessage errorComponentProps={errorComponentProps} />;
 	},
 	component: RouteComponent,
 });
@@ -35,7 +36,6 @@ function RouteComponent() {
 	return (
 		<>
 			<div>
-			
 				<Button variant={'ghost'} asChild>
 					<Link to="/collections"><ArrowLeft /> Back</Link>
 				</Button>
