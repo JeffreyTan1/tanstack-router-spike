@@ -10,10 +10,10 @@ export const Route = createFileRoute("/(app)/_dashboard/collections/")({
 	loader: async ({ context }) => {
 		return context.queryClient.ensureQueryData(collectionsQueryOptions);
 	},
-	component: RouteComponent,
+	component: Collections,
 });
 
-function RouteComponent() {
+function Collections() {
 	const { data: collections } = useSuspenseQuery(collectionsQueryOptions);
 	return (
 		<Grid>
