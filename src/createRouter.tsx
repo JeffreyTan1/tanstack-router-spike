@@ -1,8 +1,8 @@
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
-import { ErrorMessage } from "./components/common/error-message";
-import { NotFound } from "./components/common/not-found";
+import { ErrorMessage } from "./components/common/ErrorMessage";
+import { NotFound } from "./components/common/NotFound";
 import { routeTree } from "./routeTree.gen";
-import { Loader } from "./components/common/loader";
+import { Loader } from "./components/common/Loader";
 import type { QueryClient } from "@tanstack/react-query";
 
 export const createRouter = (queryClient: QueryClient) => {

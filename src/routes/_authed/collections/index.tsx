@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { collectionsQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Grid } from "@/components/common/grid";
+import { Grid } from "@/components/common/Grid";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 

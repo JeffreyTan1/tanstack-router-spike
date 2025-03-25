@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { collectionQueryOptions } from "@/api/queryOptions";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import { Grid } from "@/components/common/grid";
+import { Grid } from "@/components/common/Grid";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SelectableImage } from "./-components/selectable-image";
+import { SelectableImage } from "./-components/SelectableImage";
 import { useCollectionStore } from "./-stores/collection.store";
 import { collectionsApi } from "@/api/collections.api";
 import { queryClient } from "@/queryClient";
