@@ -20,10 +20,10 @@ export const Route = createFileRoute(
 			collectionQueryOptions(params.collectionId),
 		);
 	},
-	component: RouteComponent,
+	component: Collection,
 });
 
-function RouteComponent() {
+function Collection() {
 	const { collectionId } = Route.useParams();
 
 	const { data: collection } = useSuspenseQuery(
