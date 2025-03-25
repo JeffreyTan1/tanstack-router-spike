@@ -35,7 +35,9 @@ function Collection() {
 			});
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries();
+			queryClient.invalidateQueries({
+				queryKey: ["collections", collectionId],
+			});
 			clearSelection();
 		},
 	});
