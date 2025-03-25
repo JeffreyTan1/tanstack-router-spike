@@ -3,7 +3,7 @@ import { collectionsQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Grid } from "@/components/common/grid";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/(app)/_dashboard/collections/")({
@@ -25,13 +25,14 @@ function RouteComponent() {
 					<CardContent>
 						<div className="flex justify-between items-center gap-2">
 							<p>{collection.images.length} images</p>
-							<Link
-								to="/collections/$collectionId"
-								params={{ collectionId: collection.id }}
-								className={buttonVariants({ variant: "default" })}
-							>
-								View <ArrowRight className="size-4" />
-							</Link>
+							<Button asChild>
+								<Link
+									to="/collections/$collectionId"
+									params={{ collectionId: collection.id }}
+								>
+									View <ArrowRight className="size-4" />
+								</Link>
+							</Button>
 						</div>
 					</CardContent>
 				</Card>

@@ -3,7 +3,7 @@ import { collectionQueryOptions } from "@/api/queryOptions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Grid } from "@/components/common/grid";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute(
 	"/(app)/_dashboard/collections/$collectionId/",

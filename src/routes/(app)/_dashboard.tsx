@@ -2,7 +2,6 @@ import {
 	createFileRoute,
 	Outlet,
 	redirect,
-	useRouterState,
 } from "@tanstack/react-router";
 import { userQueryOptions } from "@/api/queryOptions";
 import { Navbar } from "./-components/navbar";

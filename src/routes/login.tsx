@@ -24,8 +24,8 @@ function RouteComponent() {
 	};
 	return (
 		<div className="flex flex-col justify-center items-center h-screen gap-4">
-			<p>
-				You have been navigated here because you attempted to access a protected
+			<p className="max-w-sm text-center">
+				You have been navigated here as you attempted to access a protected
 				route.
 			</p>
 			<Button onClick={handleLogin}>Login</Button>
