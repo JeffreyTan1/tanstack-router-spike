@@ -13,7 +13,7 @@ import { collectionsApi } from "@/api/collections.api";
 import { queryClient } from "@/queryClient";
 
 export const Route = createFileRoute(
-	"/(app)/_dashboard/collections/$collectionId/",
+	"/_authed/collections/$collectionId/",
 )({
 	loader: async ({ context, params }) => {
 		return context.queryClient.ensureQueryData(

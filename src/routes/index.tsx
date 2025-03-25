@@ -2,10 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
-	component: App,
+	component: Landing,
 });
 
-function App() {
+function Landing() {
 	return (
 		<div className="flex flex-col justify-center items-center h-screen gap-4">
 			<p>This is the landing page of the app.</p>

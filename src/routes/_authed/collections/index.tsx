@@ -6,7 +6,7 @@ import { Grid } from "@/components/common/grid";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
-export const Route = createFileRoute("/(app)/_dashboard/collections/")({
+export const Route = createFileRoute("/_authed/collections/")({
 	loader: async ({ context }) => {
 		return context.queryClient.ensureQueryData(collectionsQueryOptions);
 	},

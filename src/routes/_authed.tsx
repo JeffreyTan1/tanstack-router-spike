@@ -1,8 +1,8 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { userQueryOptions } from "@/api/queryOptions";
-import { Navbar } from "./-components/navbar";
+import { Navbar } from "./_authed/-components/navbar";
 
-export const Route = createFileRoute("/(app)/_dashboard")({
+export const Route = createFileRoute("/_authed")({
 	beforeLoad: async ({ context, location }) => {
 		if (!context.auth.isAuthenticated) {
 			throw redirect({
@@ -16,10 +16,10 @@ export const Route = createFileRoute("/(app)/_dashboard")({
 	loader: async ({ context }) => {
 		return context.queryClient.ensureQueryData(userQueryOptions);
 	},
-	component: LayoutComponent,
+	component: AppLayout,
 });
 
-function LayoutComponent() {
+function AppLayout() {
 	return (
 		<div className="mx-auto max-w-7xl py-4 px-2">
 			<Navbar />

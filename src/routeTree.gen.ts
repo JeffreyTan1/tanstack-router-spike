@@ -8,31 +8,25 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
+import { Route as AuthedImport } from './routes/_authed'
 import { Route as IndexImport } from './routes/index'
-import { Route as appDashboardImport } from './routes/(app)/_dashboard'
-import { Route as appDashboardCollectionsIndexImport } from './routes/(app)/_dashboard/collections/index'
-import { Route as appDashboardCollectionsCollectionIdIndexImport } from './routes/(app)/_dashboard/collections/$collectionId/index'
-
-// Create Virtual Routes
-
-const appImport = createFileRoute('/(app)')()
+import { Route as AuthedCollectionsIndexImport } from './routes/_authed/collections/index'
+import { Route as AuthedCollectionsCollectionIdIndexImport } from './routes/_authed/collections/$collectionId/index'
 
 // Create/Update Routes
-
-const appRoute = appImport.update({
-  id: '/(app)',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthedRoute = AuthedImport.update({
+  id: '/_authed',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -42,23 +36,17 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const appDashboardRoute = appDashboardImport.update({
-  id: '/_dashboard',
-  getParentRoute: () => appRoute,
+const AuthedCollectionsIndexRoute = AuthedCollectionsIndexImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => AuthedRoute,
 } as any)
 
-const appDashboardCollectionsIndexRoute =
-  appDashboardCollectionsIndexImport.update({
-    id: '/collections/',
-    path: '/collections/',
-    getParentRoute: () => appDashboardRoute,
-  } as any)
-
-const appDashboardCollectionsCollectionIdIndexRoute =
-  appDashboardCollectionsCollectionIdIndexImport.update({
+const AuthedCollectionsCollectionIdIndexRoute =
+  AuthedCollectionsCollectionIdIndexImport.update({
     id: '/collections/$collectionId/',
     path: '/collections/$collectionId/',
-    getParentRoute: () => appDashboardRoute,
+    getParentRoute: () => AuthedRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -72,6 +60,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthedImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -79,114 +74,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/(app)': {
-      id: '/(app)'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof appImport
-      parentRoute: typeof rootRoute
-    }
-    '/(app)/_dashboard': {
-      id: '/(app)/_dashboard'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof appDashboardImport
-      parentRoute: typeof appRoute
-    }
-    '/(app)/_dashboard/collections/': {
-      id: '/(app)/_dashboard/collections/'
+    '/_authed/collections/': {
+      id: '/_authed/collections/'
       path: '/collections'
       fullPath: '/collections'
-      preLoaderRoute: typeof appDashboardCollectionsIndexImport
-      parentRoute: typeof appDashboardImport
+      preLoaderRoute: typeof AuthedCollectionsIndexImport
+      parentRoute: typeof AuthedImport
     }
-    '/(app)/_dashboard/collections/$collectionId/': {
-      id: '/(app)/_dashboard/collections/$collectionId/'
+    '/_authed/collections/$collectionId/': {
+      id: '/_authed/collections/$collectionId/'
       path: '/collections/$collectionId'
       fullPath: '/collections/$collectionId'
-      preLoaderRoute: typeof appDashboardCollectionsCollectionIdIndexImport
-      parentRoute: typeof appDashboardImport
+      preLoaderRoute: typeof AuthedCollectionsCollectionIdIndexImport
+      parentRoute: typeof AuthedImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface appDashboardRouteChildren {
-  appDashboardCollectionsIndexRoute: typeof appDashboardCollectionsIndexRoute
-  appDashboardCollectionsCollectionIdIndexRoute: typeof appDashboardCollectionsCollectionIdIndexRoute
+interface AuthedRouteChildren {
+  AuthedCollectionsIndexRoute: typeof AuthedCollectionsIndexRoute
+  AuthedCollectionsCollectionIdIndexRoute: typeof AuthedCollectionsCollectionIdIndexRoute
 }
 
-const appDashboardRouteChildren: appDashboardRouteChildren = {
-  appDashboardCollectionsIndexRoute: appDashboardCollectionsIndexRoute,
-  appDashboardCollectionsCollectionIdIndexRoute:
-    appDashboardCollectionsCollectionIdIndexRoute,
+const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedCollectionsIndexRoute: AuthedCollectionsIndexRoute,
+  AuthedCollectionsCollectionIdIndexRoute:
+    AuthedCollectionsCollectionIdIndexRoute,
 }
 
-const appDashboardRouteWithChildren = appDashboardRoute._addFileChildren(
-  appDashboardRouteChildren,
-)
-
-interface appRouteChildren {
-  appDashboardRoute: typeof appDashboardRouteWithChildren
-}
-
-const appRouteChildren: appRouteChildren = {
-  appDashboardRoute: appDashboardRouteWithChildren,
-}
-
-const appRouteWithChildren = appRoute._addFileChildren(appRouteChildren)
+const AuthedRouteWithChildren =
+  AuthedRoute._addFileChildren(AuthedRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '/': typeof appDashboardRouteWithChildren
+  '/': typeof IndexRoute
+  '': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
-  '/collections': typeof appDashboardCollectionsIndexRoute
-  '/collections/$collectionId': typeof appDashboardCollectionsCollectionIdIndexRoute
+  '/collections': typeof AuthedCollectionsIndexRoute
+  '/collections/$collectionId': typeof AuthedCollectionsCollectionIdIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof appDashboardRouteWithChildren
+  '/': typeof IndexRoute
+  '': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
-  '/collections': typeof appDashboardCollectionsIndexRoute
-  '/collections/$collectionId': typeof appDashboardCollectionsCollectionIdIndexRoute
+  '/collections': typeof AuthedCollectionsIndexRoute
+  '/collections/$collectionId': typeof AuthedCollectionsCollectionIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
-  '/(app)': typeof appRouteWithChildren
-  '/(app)/_dashboard': typeof appDashboardRouteWithChildren
-  '/(app)/_dashboard/collections/': typeof appDashboardCollectionsIndexRoute
-  '/(app)/_dashboard/collections/$collectionId/': typeof appDashboardCollectionsCollectionIdIndexRoute
+  '/_authed/collections/': typeof AuthedCollectionsIndexRoute
+  '/_authed/collections/$collectionId/': typeof AuthedCollectionsCollectionIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/collections' | '/collections/$collectionId'
+  fullPaths: '/' | '' | '/login' | '/collections' | '/collections/$collectionId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/collections' | '/collections/$collectionId'
+  to: '/' | '' | '/login' | '/collections' | '/collections/$collectionId'
   id:
     | '__root__'
     | '/'
+    | '/_authed'
     | '/login'
-    | '/(app)'
-    | '/(app)/_dashboard'
-    | '/(app)/_dashboard/collections/'
-    | '/(app)/_dashboard/collections/$collectionId/'
+    | '/_authed/collections/'
+    | '/_authed/collections/$collectionId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthedRoute: typeof AuthedRouteWithChildren
   LoginRoute: typeof LoginRoute
-  appRoute: typeof appRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthedRoute: AuthedRouteWithChildren,
   LoginRoute: LoginRoute,
-  appRoute: appRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -200,37 +170,30 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/login",
-        "/(app)"
+        "/_authed",
+        "/login"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/_authed": {
+      "filePath": "_authed.tsx",
+      "children": [
+        "/_authed/collections/",
+        "/_authed/collections/$collectionId/"
+      ]
+    },
     "/login": {
       "filePath": "login.tsx"
     },
-    "/(app)": {
-      "filePath": "(app)",
-      "children": [
-        "/(app)/_dashboard"
-      ]
+    "/_authed/collections/": {
+      "filePath": "_authed/collections/index.tsx",
+      "parent": "/_authed"
     },
-    "/(app)/_dashboard": {
-      "filePath": "(app)/_dashboard.tsx",
-      "parent": "/(app)",
-      "children": [
-        "/(app)/_dashboard/collections/",
-        "/(app)/_dashboard/collections/$collectionId/"
-      ]
-    },
-    "/(app)/_dashboard/collections/": {
-      "filePath": "(app)/_dashboard/collections/index.tsx",
-      "parent": "/(app)/_dashboard"
-    },
-    "/(app)/_dashboard/collections/$collectionId/": {
-      "filePath": "(app)/_dashboard/collections/$collectionId/index.tsx",
-      "parent": "/(app)/_dashboard"
+    "/_authed/collections/$collectionId/": {
+      "filePath": "_authed/collections/$collectionId/index.tsx",
+      "parent": "/_authed"
     }
   }
 }
