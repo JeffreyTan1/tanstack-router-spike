@@ -1,4 +1,4 @@
-import { FAKE_API_DELAY } from "./constants";
+import { getFakeApiDelay } from "./constants";
 
 export interface Collection {
 	id: string;
@@ -53,7 +53,7 @@ const initializeCollections = () => {
 };
 
 const getCollections = async () => {
-	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
+	await new Promise((resolve) => setTimeout(resolve, getFakeApiDelay()));
 
 	if (!localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY)) {
 		initializeCollections();
@@ -64,7 +64,7 @@ const getCollections = async () => {
 };
 
 const getCollection = async (collectionId: string) => {
-	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
+	await new Promise((resolve) => setTimeout(resolve, getFakeApiDelay()));
 
 	return JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
@@ -86,7 +86,7 @@ const updateCollection = async (
 	collectionId: string,
 	batchUpdateCollection: BatchUpdateCollectionRequest,
 ) => {
-	await new Promise((resolve) => setTimeout(resolve, FAKE_API_DELAY));
+	await new Promise((resolve) => setTimeout(resolve, getFakeApiDelay()));
 
 	const collections = JSON.parse(
 		localStorage.getItem(LOCAL_STORAGE_PERSISTANCE_KEY) || "[]",
