@@ -16,10 +16,10 @@ export const Route = createFileRoute("/_authed")({
 	loader: async ({ context }) => {
 		return context.queryClient.ensureQueryData(userQueryOptions);
 	},
-	component: AppLayout,
+	component: AuthedLayout,
 });
 
-function AppLayout() {
+function AuthedLayout() {
 	return (
 		<div className="mx-auto max-w-7xl py-4 px-2">
 			<Navbar />

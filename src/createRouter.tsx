@@ -1,6 +1,6 @@
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
-import { ErrorMessage } from "./components/common/errorMessage";
-import { NotFound } from "./components/common/notFound";
+import { ErrorMessage } from "./components/common/error-message";
+import { NotFound } from "./components/common/not-found";
 import { routeTree } from "./routeTree.gen";
 import { Loader } from "./components/common/loader";
 import type { QueryClient } from "@tanstack/react-query";

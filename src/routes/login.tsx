@@ -12,10 +12,10 @@ export const Route = createFileRoute("/login")({
 			throw redirect({ to: search.redirect || "/collections" });
 		}
 	},
-	component: RouteComponent,
+	component: Login,
 });
 
-function RouteComponent() {
+function Login() {
 	const { login } = useAuth();
 
 	const handleLogin = async () => {

@@ -1,20 +1,15 @@
-import {
-	createFileRoute,
-	Link,
-} from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { collectionQueryOptions } from "@/api/queryOptions";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { Grid } from "@/components/common/grid";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SelectableImage } from "./-components/selectableImage";
+import { SelectableImage } from "./-components/selectable-image";
 import { useCollectionStore } from "./-stores/collection.store";
 import { collectionsApi } from "@/api/collections.api";
 import { queryClient } from "@/queryClient";
 
-export const Route = createFileRoute(
-	"/_authed/collections/$collectionId/",
-)({
+export const Route = createFileRoute("/_authed/collections/$collectionId/")({
 	loader: async ({ context, params }) => {
 		return context.queryClient.ensureQueryData(
 			collectionQueryOptions(params.collectionId),
@@ -29,8 +24,7 @@ function Collection() {
 	const { data: collection } = useSuspenseQuery(
 		collectionQueryOptions(collectionId),
 	);
-	const { selectedImageIds, selectImage, unselectImage, clearSelection } =
-		useCollectionStore();
+
 	const deleteMutation = useMutation({
 		mutationFn: () => {
 			return collectionsApi.updateCollection(collectionId, {
@@ -46,16 +40,17 @@ function Collection() {
 		},
 	});
 
+	const { selectedImageIds, selectImage, unselectImage, clearSelection } =
+		useCollectionStore();
+
 	return (
 		<>
-			<div>
-				<Button variant={"ghost"} asChild>
-					<Link to="/collections">
-						<ArrowLeft /> Back
-					</Link>
-				</Button>
-				<h1 className="text-2xl font-bold">{collection.name}</h1>
-			</div>
+			<Button variant={"ghost"} asChild>
+				<Link to="/collections">
+					<ArrowLeft /> Back
+				</Link>
+			</Button>
+			<h1 className="text-2xl font-bold">{collection.name}</h1>
 
 			<div className="p-2.5" />
 
@@ -75,12 +70,14 @@ function Collection() {
 					/>
 				))}
 			</Grid>
+
 			{selectedImageIds.length > 0 && (
 				<div className="fixed bottom-4 right-4">
 					<div className="flex gap-2">
 						<Button
 							onClick={() => {
-								confirm("Are you sure you want to delete these images?") && deleteMutation.mutate();
+								confirm("Are you sure you want to delete these images?") &&
+									deleteMutation.mutate();
 							}}
 							disabled={deleteMutation.isPending}
 							variant={"destructive"}
